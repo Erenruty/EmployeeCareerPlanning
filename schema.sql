@@ -20,6 +20,7 @@ CREATE TABLE Positions
     MinimumExperience INT NOT NULL,
     EducationLevel NVARCHAR(50)
 );
+go
 CREATE TABLE Employees
 (
     EmployeeID INT IDENTITY(1,1) PRIMARY KEY,
@@ -37,6 +38,7 @@ CREATE TABLE Employees
     ManagerID INT NULL,
     CurrentCareerLvl INT
 );
+go
 CREATE TABLE Competencies
 (
     CompetencyID INT IDENTITY(1,1) PRIMARY KEY,
@@ -44,6 +46,7 @@ CREATE TABLE Competencies
     Category NVARCHAR(100),
     Description NVARCHAR(MAX)
 );
+go
 CREATE TABLE Employee_Competencies
 (
     ID INT IDENTITY(1,1) PRIMARY KEY,
@@ -52,6 +55,7 @@ CREATE TABLE Employee_Competencies
     CurrentLevel INT NOT NULL,
     LastUpdated DATE
 );
+go
 CREATE TABLE Position_Requirements
 (
     PositionID INT NOT NULL,
@@ -61,6 +65,7 @@ CREATE TABLE Position_Requirements
 
     PRIMARY KEY(PositionID, CompetencyID)
 );
+go
 CREATE TABLE Trainings
 (
     TrainingID INT IDENTITY(1,1) PRIMARY KEY,
@@ -69,6 +74,7 @@ CREATE TABLE Trainings
     Level INT,
     Duration INT
 );
+go
 CREATE TABLE Employee_Trainings
 (
     EmployeeID INT NOT NULL,
@@ -80,6 +86,7 @@ CREATE TABLE Employee_Trainings
 
     PRIMARY KEY(EmployeeID, TrainingID)
 );
+go
 CREATE TABLE Performance
 (
     PerformanceID INT IDENTITY(1,1) PRIMARY KEY,
@@ -88,6 +95,7 @@ CREATE TABLE Performance
     PerformanceScore DECIMAL(5,2),
     Evaluator NVARCHAR(100)
 );
+go
 CREATE TABLE CareerPath
 (
     CareerID INT IDENTITY(1,1) PRIMARY KEY,
@@ -96,6 +104,7 @@ CREATE TABLE CareerPath
     MinimumExperience INT,
     MinimumPerformance DECIMAL(5,2)
 );
+go
 CREATE TABLE AIRecommendations
 (
     RecommendationID INT IDENTITY(1,1) PRIMARY KEY,
@@ -105,6 +114,7 @@ CREATE TABLE AIRecommendations
     RecommendationText NVARCHAR(MAX),
     CreatedDate DATETIME DEFAULT GETDATE()
 );
+go
 CREATE TABLE Recommendation_Training
 (
     AIRecommendationID INT NOT NULL,
