@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7192e09abdb042e589b36ec290ecce5c" Name="Diagram1" ZoomLevel="47">
+        <EntityTypeShape EntityType="CareerSystemModel.AIRecommendations" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareerSystemModel.CareerPath" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareerSystemModel.Competencies" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareerSystemModel.Departments" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareerSystemModel.Employee_Competencies" Width="1.5" PointX="7.5" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareerSystemModel.Employee_Trainings" Width="1.5" PointX="10.5" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareerSystemModel.Employees" Width="1.5" PointX="5.25" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareerSystemModel.Performance" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareerSystemModel.Position_Requirements" Width="1.5" PointX="5.25" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareerSystemModel.Positions" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareerSystemModel.Recommendation_Training" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareerSystemModel.Trainings" Width="1.5" PointX="8.25" PointY="3.5" IsExpanded="true" />
+        <AssociationConnector Association="CareerSystemModel.FK_EmpComp_Competency" ManuallyRouted="false" />
+        <AssociationConnector Association="CareerSystemModel.FK_PosReq_Competency" ManuallyRouted="false" />
+        <AssociationConnector Association="CareerSystemModel.FK_Training_Competency" ManuallyRouted="false" />
+        <AssociationConnector Association="CareerSystemModel.FK_Department_Parent" ManuallyRouted="false" />
+        <AssociationConnector Association="CareerSystemModel.FK_Employee_Department" ManuallyRouted="false" />
+        <AssociationConnector Association="CareerSystemModel.FK_Position_Department" ManuallyRouted="false" />
+        <AssociationConnector Association="CareerSystemModel.FK_EmpComp_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="CareerSystemModel.FK_EmpTraining_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="CareerSystemModel.FK_EmpTraining_Training" ManuallyRouted="false" />
+        <AssociationConnector Association="CareerSystemModel.FK_Employee_Manager" ManuallyRouted="false" />
+        <AssociationConnector Association="CareerSystemModel.FK_Employee_Position" ManuallyRouted="false" />
+        <AssociationConnector Association="CareerSystemModel.FK_PosReq_Position" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

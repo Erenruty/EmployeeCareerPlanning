@@ -1,0 +1,870 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CareerSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AIRecommendations">
+          <Key>
+            <PropertyRef Name="RecommendationID" />
+          </Key>
+          <Property Name="RecommendationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="TargetPositionID" Type="int" Nullable="false" />
+          <Property Name="GapScore" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="RecommendationText" Type="nvarchar(max)" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CareerPath">
+          <Key>
+            <PropertyRef Name="CareerID" />
+          </Key>
+          <Property Name="CareerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CurrentPositionID" Type="int" Nullable="false" />
+          <Property Name="TargetPositionID" Type="int" Nullable="false" />
+          <Property Name="MinimumExperience" Type="int" />
+          <Property Name="MinimumPerformance" Type="decimal" Precision="5" Scale="2" />
+        </EntityType>
+        <EntityType Name="Competencies">
+          <Key>
+            <PropertyRef Name="CompetencyID" />
+          </Key>
+          <Property Name="CompetencyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompetencyName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Category" Type="nvarchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Departments">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ParentDepartmentID" Type="int" />
+        </EntityType>
+        <EntityType Name="Employee_Competencies">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="CompetencyID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="CompetencyID" Type="int" Nullable="false" />
+          <Property Name="CurrentLevel" Type="int" Nullable="false" />
+          <Property Name="LastUpdated" Type="date" />
+        </EntityType>
+        <EntityType Name="Employee_Trainings">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="TrainingID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="TrainingID" Type="int" Nullable="false" />
+          <Property Name="CompletionDate" Type="date" />
+          <Property Name="Certificate" Type="bit" />
+          <Property Name="Score" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="Status" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SicilNo" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Ad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Soyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="20" />
+          <Property Name="DepartmentID" Type="int" Nullable="false" />
+          <Property Name="PositionID" Type="int" Nullable="false" />
+          <Property Name="HireDate" Type="date" Nullable="false" />
+          <Property Name="TotalExperienceYear" Type="int" />
+          <Property Name="EducationLevel" Type="nvarchar" MaxLength="50" />
+          <Property Name="ForeignLanguageLevel" Type="nvarchar" MaxLength="50" />
+          <Property Name="WorkStatus" Type="nvarchar" MaxLength="30" />
+          <Property Name="ManagerID" Type="int" />
+          <Property Name="CurrentCareerLvl" Type="int" />
+        </EntityType>
+        <EntityType Name="Performance">
+          <Key>
+            <PropertyRef Name="PerformanceID" />
+          </Key>
+          <Property Name="PerformanceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="EvaluationDate" Type="date" Nullable="false" />
+          <Property Name="PerformanceScore" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="Evaluator" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Position_Requirements">
+          <Key>
+            <PropertyRef Name="PositionID" />
+            <PropertyRef Name="CompetencyID" />
+          </Key>
+          <Property Name="PositionID" Type="int" Nullable="false" />
+          <Property Name="CompetencyID" Type="int" Nullable="false" />
+          <Property Name="RequiredLevel" Type="int" Nullable="false" />
+          <Property Name="MinimumExperience" Type="int" />
+        </EntityType>
+        <EntityType Name="Positions">
+          <Key>
+            <PropertyRef Name="PositionID" />
+          </Key>
+          <Property Name="PositionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PositionName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="DepartmentID" Type="int" Nullable="false" />
+          <Property Name="CareerLevel" Type="int" Nullable="false" />
+          <Property Name="MinimumExperience" Type="int" Nullable="false" />
+          <Property Name="EducationLevel" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Recommendation_Training">
+          <Key>
+            <PropertyRef Name="AIRecommendationID" />
+            <PropertyRef Name="TrainingID" />
+          </Key>
+          <Property Name="AIRecommendationID" Type="int" Nullable="false" />
+          <Property Name="TrainingID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Trainings">
+          <Key>
+            <PropertyRef Name="TrainingID" />
+          </Key>
+          <Property Name="TrainingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TrainingName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="CompetencyID" Type="int" Nullable="false" />
+          <Property Name="Level" Type="int" />
+          <Property Name="Duration" Type="int" />
+        </EntityType>
+        <Association Name="FK_Department_Parent">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="0..1" />
+          <End Role="Departments1" Type="Self.Departments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="Departments1">
+              <PropertyRef Name="ParentDepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpComp_Competency">
+          <End Role="Competencies" Type="Self.Competencies" Multiplicity="1" />
+          <End Role="Employee_Competencies" Type="Self.Employee_Competencies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competencies">
+              <PropertyRef Name="CompetencyID" />
+            </Principal>
+            <Dependent Role="Employee_Competencies">
+              <PropertyRef Name="CompetencyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpComp_Employee">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Employee_Competencies" Type="Self.Employee_Competencies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Employee_Competencies">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Department">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Manager">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+          <End Role="Employees1" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Employees1">
+              <PropertyRef Name="ManagerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Position">
+          <End Role="Positions" Type="Self.Positions" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Positions">
+              <PropertyRef Name="PositionID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="PositionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpTraining_Employee">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Employee_Trainings" Type="Self.Employee_Trainings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Employee_Trainings">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpTraining_Training">
+          <End Role="Trainings" Type="Self.Trainings" Multiplicity="1" />
+          <End Role="Employee_Trainings" Type="Self.Employee_Trainings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trainings">
+              <PropertyRef Name="TrainingID" />
+            </Principal>
+            <Dependent Role="Employee_Trainings">
+              <PropertyRef Name="TrainingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Position_Department">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+          <End Role="Positions" Type="Self.Positions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="Positions">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PosReq_Competency">
+          <End Role="Competencies" Type="Self.Competencies" Multiplicity="1" />
+          <End Role="Position_Requirements" Type="Self.Position_Requirements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competencies">
+              <PropertyRef Name="CompetencyID" />
+            </Principal>
+            <Dependent Role="Position_Requirements">
+              <PropertyRef Name="CompetencyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PosReq_Position">
+          <End Role="Positions" Type="Self.Positions" Multiplicity="1" />
+          <End Role="Position_Requirements" Type="Self.Position_Requirements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Positions">
+              <PropertyRef Name="PositionID" />
+            </Principal>
+            <Dependent Role="Position_Requirements">
+              <PropertyRef Name="PositionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Training_Competency">
+          <End Role="Competencies" Type="Self.Competencies" Multiplicity="1" />
+          <End Role="Trainings" Type="Self.Trainings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competencies">
+              <PropertyRef Name="CompetencyID" />
+            </Principal>
+            <Dependent Role="Trainings">
+              <PropertyRef Name="CompetencyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CareerSystemModelStoreContainer">
+          <EntitySet Name="AIRecommendations" EntityType="Self.AIRecommendations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CareerPath" EntityType="Self.CareerPath" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Competencies" EntityType="Self.Competencies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee_Competencies" EntityType="Self.Employee_Competencies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee_Trainings" EntityType="Self.Employee_Trainings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Performance" EntityType="Self.Performance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Position_Requirements" EntityType="Self.Position_Requirements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Positions" EntityType="Self.Positions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Recommendation_Training" EntityType="Self.Recommendation_Training" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trainings" EntityType="Self.Trainings" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Department_Parent" Association="Self.FK_Department_Parent">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Departments1" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpComp_Competency" Association="Self.FK_EmpComp_Competency">
+            <End Role="Competencies" EntitySet="Competencies" />
+            <End Role="Employee_Competencies" EntitySet="Employee_Competencies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpComp_Employee" Association="Self.FK_EmpComp_Employee">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Employee_Competencies" EntitySet="Employee_Competencies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Department" Association="Self.FK_Employee_Department">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Manager" Association="Self.FK_Employee_Manager">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Employees1" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Position" Association="Self.FK_Employee_Position">
+            <End Role="Positions" EntitySet="Positions" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpTraining_Employee" Association="Self.FK_EmpTraining_Employee">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Employee_Trainings" EntitySet="Employee_Trainings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpTraining_Training" Association="Self.FK_EmpTraining_Training">
+            <End Role="Trainings" EntitySet="Trainings" />
+            <End Role="Employee_Trainings" EntitySet="Employee_Trainings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Position_Department" Association="Self.FK_Position_Department">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Positions" EntitySet="Positions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PosReq_Competency" Association="Self.FK_PosReq_Competency">
+            <End Role="Competencies" EntitySet="Competencies" />
+            <End Role="Position_Requirements" EntitySet="Position_Requirements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PosReq_Position" Association="Self.FK_PosReq_Position">
+            <End Role="Positions" EntitySet="Positions" />
+            <End Role="Position_Requirements" EntitySet="Position_Requirements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Training_Competency" Association="Self.FK_Training_Competency">
+            <End Role="Competencies" EntitySet="Competencies" />
+            <End Role="Trainings" EntitySet="Trainings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CareerSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AIRecommendations">
+          <Key>
+            <PropertyRef Name="RecommendationID" />
+          </Key>
+          <Property Name="RecommendationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="TargetPositionID" Type="Int32" Nullable="false" />
+          <Property Name="GapScore" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="RecommendationText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="CareerPath">
+          <Key>
+            <PropertyRef Name="CareerID" />
+          </Key>
+          <Property Name="CareerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CurrentPositionID" Type="Int32" Nullable="false" />
+          <Property Name="TargetPositionID" Type="Int32" Nullable="false" />
+          <Property Name="MinimumExperience" Type="Int32" />
+          <Property Name="MinimumPerformance" Type="Decimal" Precision="5" Scale="2" />
+        </EntityType>
+        <EntityType Name="Competencies">
+          <Key>
+            <PropertyRef Name="CompetencyID" />
+          </Key>
+          <Property Name="CompetencyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompetencyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Category" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employee_Competencies" Relationship="Self.FK_EmpComp_Competency" FromRole="Competencies" ToRole="Employee_Competencies" />
+          <NavigationProperty Name="Position_Requirements" Relationship="Self.FK_PosReq_Competency" FromRole="Competencies" ToRole="Position_Requirements" />
+          <NavigationProperty Name="Trainings" Relationship="Self.FK_Training_Competency" FromRole="Competencies" ToRole="Trainings" />
+        </EntityType>
+        <EntityType Name="Departments">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ParentDepartmentID" Type="Int32" />
+          <NavigationProperty Name="Departments1" Relationship="Self.FK_Department_Parent" FromRole="Departments" ToRole="Departments1" />
+          <NavigationProperty Name="Departments2" Relationship="Self.FK_Department_Parent" FromRole="Departments1" ToRole="Departments" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Department" FromRole="Departments" ToRole="Employees" />
+          <NavigationProperty Name="Positions" Relationship="Self.FK_Position_Department" FromRole="Departments" ToRole="Positions" />
+        </EntityType>
+        <EntityType Name="Employee_Competencies">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="CompetencyID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="CompetencyID" Type="Int32" Nullable="false" />
+          <Property Name="CurrentLevel" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdated" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Competencies" Relationship="Self.FK_EmpComp_Competency" FromRole="Employee_Competencies" ToRole="Competencies" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_EmpComp_Employee" FromRole="Employee_Competencies" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="Employee_Trainings">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+            <PropertyRef Name="TrainingID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="TrainingID" Type="Int32" Nullable="false" />
+          <Property Name="CompletionDate" Type="DateTime" Precision="0" />
+          <Property Name="Certificate" Type="Boolean" />
+          <Property Name="Score" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="Status" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_EmpTraining_Employee" FromRole="Employee_Trainings" ToRole="Employees" />
+          <NavigationProperty Name="Trainings" Relationship="Self.FK_EmpTraining_Training" FromRole="Employee_Trainings" ToRole="Trainings" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SicilNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" />
+          <Property Name="PositionID" Type="Int32" Nullable="false" />
+          <Property Name="HireDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TotalExperienceYear" Type="Int32" />
+          <Property Name="EducationLevel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ForeignLanguageLevel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WorkStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ManagerID" Type="Int32" />
+          <Property Name="CurrentCareerLvl" Type="Int32" />
+          <NavigationProperty Name="Departments" Relationship="Self.FK_Employee_Department" FromRole="Employees" ToRole="Departments" />
+          <NavigationProperty Name="Employee_Competencies" Relationship="Self.FK_EmpComp_Employee" FromRole="Employees" ToRole="Employee_Competencies" />
+          <NavigationProperty Name="Employee_Trainings" Relationship="Self.FK_EmpTraining_Employee" FromRole="Employees" ToRole="Employee_Trainings" />
+          <NavigationProperty Name="Employees1" Relationship="Self.FK_Employee_Manager" FromRole="Employees" ToRole="Employees1" />
+          <NavigationProperty Name="Employees2" Relationship="Self.FK_Employee_Manager" FromRole="Employees1" ToRole="Employees" />
+          <NavigationProperty Name="Positions" Relationship="Self.FK_Employee_Position" FromRole="Employees" ToRole="Positions" />
+        </EntityType>
+        <EntityType Name="Performance">
+          <Key>
+            <PropertyRef Name="PerformanceID" />
+          </Key>
+          <Property Name="PerformanceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="EvaluationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PerformanceScore" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="Evaluator" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Position_Requirements">
+          <Key>
+            <PropertyRef Name="PositionID" />
+            <PropertyRef Name="CompetencyID" />
+          </Key>
+          <Property Name="PositionID" Type="Int32" Nullable="false" />
+          <Property Name="CompetencyID" Type="Int32" Nullable="false" />
+          <Property Name="RequiredLevel" Type="Int32" Nullable="false" />
+          <Property Name="MinimumExperience" Type="Int32" />
+          <NavigationProperty Name="Competencies" Relationship="Self.FK_PosReq_Competency" FromRole="Position_Requirements" ToRole="Competencies" />
+          <NavigationProperty Name="Positions" Relationship="Self.FK_PosReq_Position" FromRole="Position_Requirements" ToRole="Positions" />
+        </EntityType>
+        <EntityType Name="Positions">
+          <Key>
+            <PropertyRef Name="PositionID" />
+          </Key>
+          <Property Name="PositionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PositionName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" />
+          <Property Name="CareerLevel" Type="Int32" Nullable="false" />
+          <Property Name="MinimumExperience" Type="Int32" Nullable="false" />
+          <Property Name="EducationLevel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Departments" Relationship="Self.FK_Position_Department" FromRole="Positions" ToRole="Departments" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Position" FromRole="Positions" ToRole="Employees" />
+          <NavigationProperty Name="Position_Requirements" Relationship="Self.FK_PosReq_Position" FromRole="Positions" ToRole="Position_Requirements" />
+        </EntityType>
+        <EntityType Name="Recommendation_Training">
+          <Key>
+            <PropertyRef Name="AIRecommendationID" />
+            <PropertyRef Name="TrainingID" />
+          </Key>
+          <Property Name="AIRecommendationID" Type="Int32" Nullable="false" />
+          <Property Name="TrainingID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Trainings">
+          <Key>
+            <PropertyRef Name="TrainingID" />
+          </Key>
+          <Property Name="TrainingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TrainingName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CompetencyID" Type="Int32" Nullable="false" />
+          <Property Name="Level" Type="Int32" />
+          <Property Name="Duration" Type="Int32" />
+          <NavigationProperty Name="Competencies" Relationship="Self.FK_Training_Competency" FromRole="Trainings" ToRole="Competencies" />
+          <NavigationProperty Name="Employee_Trainings" Relationship="Self.FK_EmpTraining_Training" FromRole="Trainings" ToRole="Employee_Trainings" />
+        </EntityType>
+        <Association Name="FK_EmpComp_Competency">
+          <End Role="Competencies" Type="Self.Competencies" Multiplicity="1" />
+          <End Role="Employee_Competencies" Type="Self.Employee_Competencies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competencies">
+              <PropertyRef Name="CompetencyID" />
+            </Principal>
+            <Dependent Role="Employee_Competencies">
+              <PropertyRef Name="CompetencyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PosReq_Competency">
+          <End Role="Competencies" Type="Self.Competencies" Multiplicity="1" />
+          <End Role="Position_Requirements" Type="Self.Position_Requirements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competencies">
+              <PropertyRef Name="CompetencyID" />
+            </Principal>
+            <Dependent Role="Position_Requirements">
+              <PropertyRef Name="CompetencyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Training_Competency">
+          <End Role="Competencies" Type="Self.Competencies" Multiplicity="1" />
+          <End Role="Trainings" Type="Self.Trainings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Competencies">
+              <PropertyRef Name="CompetencyID" />
+            </Principal>
+            <Dependent Role="Trainings">
+              <PropertyRef Name="CompetencyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Department_Parent">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="0..1" />
+          <End Role="Departments1" Type="Self.Departments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="Departments1">
+              <PropertyRef Name="ParentDepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Department">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Position_Department">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+          <End Role="Positions" Type="Self.Positions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="Positions">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpComp_Employee">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Employee_Competencies" Type="Self.Employee_Competencies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Employee_Competencies">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpTraining_Employee">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Employee_Trainings" Type="Self.Employee_Trainings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Employee_Trainings">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpTraining_Training">
+          <End Role="Trainings" Type="Self.Trainings" Multiplicity="1" />
+          <End Role="Employee_Trainings" Type="Self.Employee_Trainings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trainings">
+              <PropertyRef Name="TrainingID" />
+            </Principal>
+            <Dependent Role="Employee_Trainings">
+              <PropertyRef Name="TrainingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Manager">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+          <End Role="Employees1" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Employees1">
+              <PropertyRef Name="ManagerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Position">
+          <End Role="Positions" Type="Self.Positions" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Positions">
+              <PropertyRef Name="PositionID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="PositionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PosReq_Position">
+          <End Role="Positions" Type="Self.Positions" Multiplicity="1" />
+          <End Role="Position_Requirements" Type="Self.Position_Requirements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Positions">
+              <PropertyRef Name="PositionID" />
+            </Principal>
+            <Dependent Role="Position_Requirements">
+              <PropertyRef Name="PositionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CareerSystemEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AIRecommendations" EntityType="Self.AIRecommendations" />
+          <EntitySet Name="CareerPath" EntityType="Self.CareerPath" />
+          <EntitySet Name="Competencies" EntityType="Self.Competencies" />
+          <EntitySet Name="Departments" EntityType="Self.Departments" />
+          <EntitySet Name="Employee_Competencies" EntityType="Self.Employee_Competencies" />
+          <EntitySet Name="Employee_Trainings" EntityType="Self.Employee_Trainings" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" />
+          <EntitySet Name="Performance" EntityType="Self.Performance" />
+          <EntitySet Name="Position_Requirements" EntityType="Self.Position_Requirements" />
+          <EntitySet Name="Positions" EntityType="Self.Positions" />
+          <EntitySet Name="Recommendation_Training" EntityType="Self.Recommendation_Training" />
+          <EntitySet Name="Trainings" EntityType="Self.Trainings" />
+          <AssociationSet Name="FK_EmpComp_Competency" Association="Self.FK_EmpComp_Competency">
+            <End Role="Competencies" EntitySet="Competencies" />
+            <End Role="Employee_Competencies" EntitySet="Employee_Competencies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PosReq_Competency" Association="Self.FK_PosReq_Competency">
+            <End Role="Competencies" EntitySet="Competencies" />
+            <End Role="Position_Requirements" EntitySet="Position_Requirements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Training_Competency" Association="Self.FK_Training_Competency">
+            <End Role="Competencies" EntitySet="Competencies" />
+            <End Role="Trainings" EntitySet="Trainings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Department_Parent" Association="Self.FK_Department_Parent">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Departments1" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Department" Association="Self.FK_Employee_Department">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Position_Department" Association="Self.FK_Position_Department">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Positions" EntitySet="Positions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpComp_Employee" Association="Self.FK_EmpComp_Employee">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Employee_Competencies" EntitySet="Employee_Competencies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpTraining_Employee" Association="Self.FK_EmpTraining_Employee">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Employee_Trainings" EntitySet="Employee_Trainings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpTraining_Training" Association="Self.FK_EmpTraining_Training">
+            <End Role="Trainings" EntitySet="Trainings" />
+            <End Role="Employee_Trainings" EntitySet="Employee_Trainings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Manager" Association="Self.FK_Employee_Manager">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Employees1" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Position" Association="Self.FK_Employee_Position">
+            <End Role="Positions" EntitySet="Positions" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PosReq_Position" Association="Self.FK_PosReq_Position">
+            <End Role="Positions" EntitySet="Positions" />
+            <End Role="Position_Requirements" EntitySet="Position_Requirements" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CareerSystemModelStoreContainer" CdmEntityContainer="CareerSystemEntities1">
+          <EntitySetMapping Name="AIRecommendations">
+            <EntityTypeMapping TypeName="CareerSystemModel.AIRecommendations">
+              <MappingFragment StoreEntitySet="AIRecommendations">
+                <ScalarProperty Name="RecommendationID" ColumnName="RecommendationID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="TargetPositionID" ColumnName="TargetPositionID" />
+                <ScalarProperty Name="GapScore" ColumnName="GapScore" />
+                <ScalarProperty Name="RecommendationText" ColumnName="RecommendationText" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CareerPath">
+            <EntityTypeMapping TypeName="CareerSystemModel.CareerPath">
+              <MappingFragment StoreEntitySet="CareerPath">
+                <ScalarProperty Name="CareerID" ColumnName="CareerID" />
+                <ScalarProperty Name="CurrentPositionID" ColumnName="CurrentPositionID" />
+                <ScalarProperty Name="TargetPositionID" ColumnName="TargetPositionID" />
+                <ScalarProperty Name="MinimumExperience" ColumnName="MinimumExperience" />
+                <ScalarProperty Name="MinimumPerformance" ColumnName="MinimumPerformance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Competencies">
+            <EntityTypeMapping TypeName="CareerSystemModel.Competencies">
+              <MappingFragment StoreEntitySet="Competencies">
+                <ScalarProperty Name="CompetencyID" ColumnName="CompetencyID" />
+                <ScalarProperty Name="CompetencyName" ColumnName="CompetencyName" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="CareerSystemModel.Departments">
+              <MappingFragment StoreEntitySet="Departments">
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="ParentDepartmentID" ColumnName="ParentDepartmentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee_Competencies">
+            <EntityTypeMapping TypeName="CareerSystemModel.Employee_Competencies">
+              <MappingFragment StoreEntitySet="Employee_Competencies">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="CompetencyID" ColumnName="CompetencyID" />
+                <ScalarProperty Name="CurrentLevel" ColumnName="CurrentLevel" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee_Trainings">
+            <EntityTypeMapping TypeName="CareerSystemModel.Employee_Trainings">
+              <MappingFragment StoreEntitySet="Employee_Trainings">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="TrainingID" ColumnName="TrainingID" />
+                <ScalarProperty Name="CompletionDate" ColumnName="CompletionDate" />
+                <ScalarProperty Name="Certificate" ColumnName="Certificate" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="CareerSystemModel.Employees">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="SicilNo" ColumnName="SicilNo" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Soyad" ColumnName="Soyad" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+                <ScalarProperty Name="HireDate" ColumnName="HireDate" />
+                <ScalarProperty Name="TotalExperienceYear" ColumnName="TotalExperienceYear" />
+                <ScalarProperty Name="EducationLevel" ColumnName="EducationLevel" />
+                <ScalarProperty Name="ForeignLanguageLevel" ColumnName="ForeignLanguageLevel" />
+                <ScalarProperty Name="WorkStatus" ColumnName="WorkStatus" />
+                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
+                <ScalarProperty Name="CurrentCareerLvl" ColumnName="CurrentCareerLvl" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Performance">
+            <EntityTypeMapping TypeName="CareerSystemModel.Performance">
+              <MappingFragment StoreEntitySet="Performance">
+                <ScalarProperty Name="PerformanceID" ColumnName="PerformanceID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="EvaluationDate" ColumnName="EvaluationDate" />
+                <ScalarProperty Name="PerformanceScore" ColumnName="PerformanceScore" />
+                <ScalarProperty Name="Evaluator" ColumnName="Evaluator" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Position_Requirements">
+            <EntityTypeMapping TypeName="CareerSystemModel.Position_Requirements">
+              <MappingFragment StoreEntitySet="Position_Requirements">
+                <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+                <ScalarProperty Name="CompetencyID" ColumnName="CompetencyID" />
+                <ScalarProperty Name="RequiredLevel" ColumnName="RequiredLevel" />
+                <ScalarProperty Name="MinimumExperience" ColumnName="MinimumExperience" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Positions">
+            <EntityTypeMapping TypeName="CareerSystemModel.Positions">
+              <MappingFragment StoreEntitySet="Positions">
+                <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+                <ScalarProperty Name="PositionName" ColumnName="PositionName" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="CareerLevel" ColumnName="CareerLevel" />
+                <ScalarProperty Name="MinimumExperience" ColumnName="MinimumExperience" />
+                <ScalarProperty Name="EducationLevel" ColumnName="EducationLevel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recommendation_Training">
+            <EntityTypeMapping TypeName="CareerSystemModel.Recommendation_Training">
+              <MappingFragment StoreEntitySet="Recommendation_Training">
+                <ScalarProperty Name="AIRecommendationID" ColumnName="AIRecommendationID" />
+                <ScalarProperty Name="TrainingID" ColumnName="TrainingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trainings">
+            <EntityTypeMapping TypeName="CareerSystemModel.Trainings">
+              <MappingFragment StoreEntitySet="Trainings">
+                <ScalarProperty Name="TrainingID" ColumnName="TrainingID" />
+                <ScalarProperty Name="TrainingName" ColumnName="TrainingName" />
+                <ScalarProperty Name="CompetencyID" ColumnName="CompetencyID" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
