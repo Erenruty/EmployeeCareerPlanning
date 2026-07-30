@@ -11,7 +11,8 @@ namespace CareerManagamentSystem.Controllers
         public ActionResult Index()
         {
             CareerSystemEntities1 db = new CareerSystemEntities1();
-            return View();
+            List<Employees> employees = db.Employees.ToList();
+            return View(employees);
         }
 
         public ActionResult About()
