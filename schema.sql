@@ -123,6 +123,21 @@ CREATE TABLE Recommendation_Training
     PRIMARY KEY(AIRecommendationID, TrainingID)
 );
 go
+CREATE TABLE Users
+(
+    UserID INT IDENTITY(1,1) PRIMARY KEY,
+    EmployeeID INT NOT NULL UNIQUE,
+    Username NVARCHAR(50) NOT NULL UNIQUE,
+    Password NVARCHAR(255) NOT NULL,
+    Email NVARCHAR(100) NOT NULL UNIQUE,
+    CreatedDate DATETIME NOT NULL DEFAULT GETDATE()
+);
+-- Users
+ALTER TABLE Departments
+ADD CONSTRAINT FK_Users_Employees
+FOREIGN KEY (EmployeeID)
+REFERENCES Employees(EmployeeID);
+
 -- Departments
 ALTER TABLE Departments
 ADD CONSTRAINT FK_Department_Parent
