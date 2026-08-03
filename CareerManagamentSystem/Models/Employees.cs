@@ -19,6 +19,7 @@ namespace CareerManagamentSystem.Models
             this.Employee_Competencies = new HashSet<Employee_Competencies>();
             this.Employee_Trainings = new HashSet<Employee_Trainings>();
             this.Employees1 = new HashSet<Employees>();
+            this.Users = new HashSet<Users>();
         }
     
         public int EmployeeID { get; set; }
@@ -42,5 +43,6 @@ namespace CareerManagamentSystem.Models
         public virtual ICollection<Employees> Employees1 { get; set; }
         public virtual Employees Employees2 { get; set; }
         public virtual Positions Positions { get; set; }
+        public virtual ICollection<Users> Users { get; set; }
     }
 }

@@ -37,5 +37,6 @@ namespace CareerManagamentSystem.Models
         public DbSet<Positions> Positions { get; set; }
         public DbSet<Recommendation_Training> Recommendation_Training { get; set; }
         public DbSet<Trainings> Trainings { get; set; }
+        public DbSet<Users> Users { get; set; }
     }
 }

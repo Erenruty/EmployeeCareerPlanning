@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CareerSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CareerSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AIRecommendations">
           <Key>
             <PropertyRef Name="RecommendationID" />
@@ -132,6 +132,17 @@
           <Property Name="CompetencyID" Type="int" Nullable="false" />
           <Property Name="Level" Type="int" />
           <Property Name="Duration" Type="int" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="created_at" Type="datetime" />
         </EntityType>
         <Association Name="FK_Department_Parent">
           <End Role="Departments" Type="Self.Departments" Multiplicity="0..1" />
@@ -277,6 +288,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_users_employes">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="CareerSystemModelStoreContainer">
           <EntitySet Name="AIRecommendations" EntityType="Self.AIRecommendations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CareerPath" EntityType="Self.CareerPath" Schema="dbo" store:Type="Tables" />
@@ -290,6 +313,7 @@
           <EntitySet Name="Positions" EntityType="Self.Positions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Recommendation_Training" EntityType="Self.Recommendation_Training" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trainings" EntityType="Self.Trainings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Department_Parent" Association="Self.FK_Department_Parent">
             <End Role="Departments" EntitySet="Departments" />
             <End Role="Departments1" EntitySet="Departments" />
@@ -338,9 +362,12 @@
             <End Role="Competencies" EntitySet="Competencies" />
             <End Role="Trainings" EntitySet="Trainings" />
           </AssociationSet>
+          <AssociationSet Name="FK_users_employes" Association="Self.FK_users_employes">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CareerSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -439,6 +466,7 @@
           <NavigationProperty Name="Employees1" Relationship="Self.FK_Employee_Manager" FromRole="Employees" ToRole="Employees1" />
           <NavigationProperty Name="Employees2" Relationship="Self.FK_Employee_Manager" FromRole="Employees1" ToRole="Employees" />
           <NavigationProperty Name="Positions" Relationship="Self.FK_Employee_Position" FromRole="Employees" ToRole="Positions" />
+          <NavigationProperty Name="Users" Relationship="CareerSystemModel.FK_users_employes" FromRole="Employees" ToRole="Users" />
         </EntityType>
         <EntityType Name="Performance">
           <Key>
@@ -701,7 +729,36 @@
             <End Role="Positions" EntitySet="Positions" />
             <End Role="Position_Requirements" EntitySet="Position_Requirements" />
           </AssociationSet>
+          <EntitySet Name="Users" EntityType="CareerSystemModel.Users" />
+          <AssociationSet Name="FK_users_employes" Association="CareerSystemModel.FK_users_employes">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Employees" Relationship="CareerSystemModel.FK_users_employes" FromRole="Users" ToRole="Employees" />
+        </EntityType>
+        <Association Name="FK_users_employes">
+          <End Type="CareerSystemModel.Employees" Role="Employees" Multiplicity="1" />
+          <End Type="CareerSystemModel.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -841,6 +898,18 @@
                 <ScalarProperty Name="CompetencyID" ColumnName="CompetencyID" />
                 <ScalarProperty Name="Level" ColumnName="Level" />
                 <ScalarProperty Name="Duration" ColumnName="Duration" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="CareerSystemModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

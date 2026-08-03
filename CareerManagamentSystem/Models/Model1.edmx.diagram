@@ -29,6 +29,8 @@
         <AssociationConnector Association="CareerSystemModel.FK_Employee_Manager" ManuallyRouted="false" />
         <AssociationConnector Association="CareerSystemModel.FK_Employee_Position" ManuallyRouted="false" />
         <AssociationConnector Association="CareerSystemModel.FK_PosReq_Position" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CareerSystemModel.Users" Width="1.5" PointX="7.5" PointY="10.625" />
+        <AssociationConnector Association="CareerSystemModel.FK_users_employes" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
