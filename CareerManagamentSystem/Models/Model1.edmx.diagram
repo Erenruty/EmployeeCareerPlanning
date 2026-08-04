@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7192e09abdb042e589b36ec290ecce5c" Name="Diagram1" ZoomLevel="47">
+      <Diagram DiagramId="7192e09abdb042e589b36ec290ecce5c" Name="Diagram1" ZoomLevel="81">
         <EntityTypeShape EntityType="CareerSystemModel.AIRecommendations" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CareerSystemModel.CareerPath" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CareerSystemModel.Competencies" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
@@ -15,7 +15,7 @@
         <EntityTypeShape EntityType="CareerSystemModel.Performance" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CareerSystemModel.Position_Requirements" Width="1.5" PointX="5.25" PointY="12.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CareerSystemModel.Positions" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
-        <EntityTypeShape EntityType="CareerSystemModel.Recommendation_Training" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareerSystemModel.Recommendation_Training" Width="2.75" PointX="10.625" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="CareerSystemModel.Trainings" Width="1.5" PointX="8.25" PointY="3.5" IsExpanded="true" />
         <AssociationConnector Association="CareerSystemModel.FK_EmpComp_Competency" ManuallyRouted="false" />
         <AssociationConnector Association="CareerSystemModel.FK_PosReq_Competency" ManuallyRouted="false" />
