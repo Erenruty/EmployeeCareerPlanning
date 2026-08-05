@@ -125,6 +125,8 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\CompetenceyController.cs" />
+    <Compile Include="DTOs\CareerAnalysisResultDto.cs" />
+    <Compile Include="DTOs\CareerRoadmapDto.cs" />
     <Compile Include="DTOs\CompetencyGapDto.cs" />
     <Compile Include="Models\AIRecommendations.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -188,6 +190,8 @@
     <Compile Include="Models\Trainings.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\CareerAnalysisService.cs" />
+    <Compile Include="Services\CareerRoadmapService.cs" />
     <Compile Include="Services\CompetencyGapService.cs" />
     <Compile Include="Services\SuitabilityScoreService.cs" />
     <Compile Include="Services\TrainingRecommendationService.cs" />
