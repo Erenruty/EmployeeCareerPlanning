@@ -4214,16 +4214,16 @@ a:hover {
 }
 
 .au-progress .au-progress__bar .au-progress__inner {
-  position: absolute;
-  width: 0;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  border-radius: 5px;
-  transition: width 1s ease-in-out;
-  background-color: #4272d7;
-  overflow: visible;
-}
+        position: absolute;
+        width: 0;
+        top: 0;
+        left: 0;
+        bottom: 10px;
+        border-radius: 5px;
+        transition: width 1s ease-in-out;
+        background-color: #4272d7;
+        overflow: visible;
+ }
 
 .au-progress__title {
   font-size: 14px;
