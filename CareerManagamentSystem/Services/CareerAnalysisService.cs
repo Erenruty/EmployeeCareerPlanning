@@ -1,7 +1,9 @@
 ﻿using CareerManagamentSystem.DTOs;
 using CareerManagamentSystem.Models;
+using CareerManagamentSystem.Services.AI;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CareerManagamentSystem.Services
 {
@@ -14,6 +16,8 @@ namespace CareerManagamentSystem.Services
         private readonly SuitabilityScoreService suitabilityScoreService;
         private readonly TrainingRecommendationService trainingRecommendationService;
         private readonly CareerRoadmapService careerRoadmapService;
+        private readonly IAIRecommendationService aiRecommendationService;
+        private readonly AIRecommendationSaveService aiRecommendationSaveService;
 
         public CareerAnalysisService()
         {
@@ -23,8 +27,14 @@ namespace CareerManagamentSystem.Services
             suitabilityScoreService = new SuitabilityScoreService();
             trainingRecommendationService = new TrainingRecommendationService();
             careerRoadmapService = new CareerRoadmapService();
-        }
 
+            // Yapay zeka önerileri için Gemini servisi kullanılır.
+            aiRecommendationService = new GeminiRecommendationService();
+
+            // Oluşturulan AI önerisini veritabanına kaydetmek için kullanılır.
+            aiRecommendationSaveService = new AIRecommendationSaveService();
+
+        }
 
         // Çalışan için kariyer analizini gerçekleştirir.
         public CareerAnalysisResultDto KariyerAnaliziYap(int employeeId)
@@ -123,6 +133,10 @@ namespace CareerManagamentSystem.Services
                 sonuc.SuitabilityScore =
                     enYuksekPuan;
 
+                // Hedef pozisyon için deneyim ve performans şartlarının durumu tutulur.
+                sonuc.HedefGeciseUygunMu =
+                    enUygunGecis.GeciseUygunMu;
+
 
                 // Seçilen hedef pozisyona göre yetkinlik farkları hesaplanır.
                 sonuc.CompetencyGaps =
@@ -142,6 +156,89 @@ namespace CareerManagamentSystem.Services
 
 
             return sonuc;
+        }
+
+        // Kariyer analiz sonucunu yapay zekaya gönderilecek veri yapısına dönüştürür.
+        public AIRecommendationDto AIVerisiOlustur(CareerAnalysisResultDto analizSonucu)
+        {
+            if (analizSonucu == null)
+            {
+                return null;
+            }
+
+            AIRecommendationDto aiVerisi =
+                new AIRecommendationDto
+                {
+                    CurrentPositionName =
+                        analizSonucu.CurrentPositionName,
+
+                    TargetPositionName =
+                        analizSonucu.TargetPositionName,
+
+                    SuitabilityScore =
+                        analizSonucu.SuitabilityScore,
+
+                    HedefGeciseUygunMu =
+                        analizSonucu.HedefGeciseUygunMu,
+
+                    CompetencyGaps =
+                        analizSonucu.CompetencyGaps,
+
+                    RecommendedTrainings =
+                        analizSonucu.RecommendedTrainings
+                            .Select(x => x.TrainingName)
+                            .ToList()
+                };
+
+            return aiVerisi;
+        }
+        // Kariyer analizini yapar ve sonucu Gemini ile yorumlatır.
+        public async Task<CareerAnalysisResultDto> KariyerAnaliziVeAIOnerisiYapAsync(
+            int employeeId)
+        {
+            // Önce mevcut business logic ile kariyer analizi yapılır.
+            CareerAnalysisResultDto analizSonucu =
+                KariyerAnaliziYap(employeeId);
+
+            // Çalışan bulunamazsa işlem devam etmez.
+            if (analizSonucu == null)
+            {
+                return null;
+            }
+
+            // Hedef pozisyon oluşmadıysa AI'ya gönderilecek yeterli veri yoktur.
+            if (!analizSonucu.TargetPositionID.HasValue)
+            {
+                analizSonucu.RecommendationText =
+                    "Çalışan için tanımlı bir kariyer hedefi bulunamadı.";
+
+                return analizSonucu;
+            }
+
+            // Business logic sonucu AI'nın kullanacağı yapıya dönüştürülür.
+            AIRecommendationDto aiVerisi =
+                AIVerisiOlustur(analizSonucu);
+
+            // Gemini'den kariyer gelişim önerisi alınır.
+            string aiOnerisi =
+                await aiRecommendationService
+                    .KariyerOnerisiOlusturAsync(aiVerisi);
+
+            // Oluşturulan AI metni genel analiz sonucuna eklenir.
+            analizSonucu.RecommendationText = aiOnerisi;
+
+            // Analiz sonucu AIRecommendations ve Recommendation_Training
+            // tablolarına kaydedilir.
+            int recommendationId =
+                aiRecommendationSaveService.OneriyiKaydet(analizSonucu);
+
+            // Oluşturulan kayıt ID'si sonuç içerisinde tutulur.
+            if (recommendationId > 0)
+            {
+                analizSonucu.RecommendationID = recommendationId;
+            }
+
+            return analizSonucu;
         }
     }
 }

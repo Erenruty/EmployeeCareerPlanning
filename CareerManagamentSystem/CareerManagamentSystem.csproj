@@ -127,6 +127,7 @@
     <Compile Include="Controllers\CareerPathController.cs" />
     <Compile Include="Controllers\CompetenceyController.cs" />
     <Compile Include="Controllers\TrainingController.cs" />
+    <Compile Include="DTOs\AIRecommendationDto.cs" />
     <Compile Include="DTOs\CareerAnalysisResultDto.cs" />
     <Compile Include="DTOs\CareerRoadmapDto.cs" />
     <Compile Include="DTOs\CompetencyGapDto.cs" />
@@ -192,6 +193,10 @@
     <Compile Include="Models\Trainings.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\AI\AIRecommendationSaveService.cs" />
+    <Compile Include="Services\AI\AIRecommendationService.cs" />
+    <Compile Include="Services\AI\GeminiRecommendationService.cs" />
+    <Compile Include="Services\AI\IAIRecommendationService.cs" />
     <Compile Include="Services\CareerAnalysisService.cs" />
     <Compile Include="Services\CareerRoadmapService.cs" />
     <Compile Include="Services\CompetencyGapService.cs" />

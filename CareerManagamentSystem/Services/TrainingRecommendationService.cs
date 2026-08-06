@@ -9,21 +9,21 @@ namespace CareerManagamentSystem.Services
     {
         CareerSystemEntities1 db = new CareerSystemEntities1();
 
-        // Çalışanın eksik yetkinliklerini bulmak için daha önce hazırladığımız servisi kullanıyoruz.
-        CompetencyGapService competencyGapService = new CompetencyGapService();
+        // Çalışanın eksik yetkinliklerini bulmak için kullanılır.
+        CompetencyGapService competencyGapService =
+            new CompetencyGapService();
 
 
-        // Çalışanın hedef pozisyona göre alması gereken eğitimleri bulan metot.
+        // Çalışanın hedef pozisyona göre alması gereken eğitimleri bulur.
         public List<Trainings> GetRecommendedTrainings(
             int employeeId,
             int targetPositionId)
         {
-            // Önerilecek eğitimleri tutacağımız boş liste.
             List<Trainings> recommendedTrainings =
                 new List<Trainings>();
 
 
-            // Önce çalışanın hedef pozisyona göre yetkinlik farklarını alıyoruz.
+            // Hedef pozisyona göre yetkinlik farkları alınır.
             List<CompetencyGapDto> gaps =
                 competencyGapService.GetCompetencyGaps(
                     employeeId,
@@ -31,27 +31,37 @@ namespace CareerManagamentSystem.Services
                 );
 
 
-            // Yetkinlikleri tek tek kontrol ediyoruz.
+            // Çalışanın daha önce tamamladığı eğitimlerin ID'leri alınır.
+            var tamamlananEgitimler = db.Employee_Trainings
+                .Where(x =>
+                    x.EmployeeID == employeeId &&
+                    x.Status == "Completed")
+                .Select(x => x.TrainingID)
+                .ToList();
+
+
             foreach (CompetencyGapDto gap in gaps)
             {
-                // Sadece eksik olan yetkinlikler için eğitim önerisi yapıyoruz.
+                // Yalnızca eksik yetkinlikler için eğitim aranır.
                 if (gap.EksikMi)
                 {
-                    // Trainings tablosundan, eksik yetkinliğe ait eğitimleri buluyoruz.
                     var trainings = db.Trainings
-                        .Where(x => x.CompetencyID == gap.CompetencyID)
-                        .ToList();
+                       .Where(x =>
+                         x.CompetencyID == gap.CompetencyID &&
+                         x.Level > gap.CurrentLevel &&
+                         x.Level <= gap.RequiredLevel &&
+                         !tamamlananEgitimler.Contains(x.TrainingID))
+                       .ToList();
 
-
-                    // Bulunan eğitimleri sonuç listesine ekliyoruz.
                     foreach (Trainings training in trainings)
                     {
-                        // Aynı eğitimin listeye iki kez eklenmesini önlüyoruz.
-                        bool alreadyAdded = recommendedTrainings
-                            .Any(x => x.TrainingID == training.TrainingID);
+                        // Aynı eğitimin birden fazla kez önerilmesi engellenir.
+                        bool zatenEklendiMi =
+                            recommendedTrainings.Any(x =>
+                                x.TrainingID == training.TrainingID);
 
 
-                        if (alreadyAdded == false)
+                        if (!zatenEklendiMi)
                         {
                             recommendedTrainings.Add(training);
                         }
@@ -59,7 +69,7 @@ namespace CareerManagamentSystem.Services
                 }
             }
 
-            // Önerilen eğitimlerin listesini geri döndürüyoruz.
+
             return recommendedTrainings;
         }
     }

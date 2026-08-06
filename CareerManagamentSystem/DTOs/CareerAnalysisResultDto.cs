@@ -8,6 +8,9 @@ namespace CareerManagamentSystem.DTOs
     {
         public int EmployeeID { get; set; }
 
+        // Veritabanına kaydedilen AI önerisinin ID'si
+        public int? RecommendationID { get; set; }
+
         public int CurrentPositionID { get; set; }
 
         public string CurrentPositionName { get; set; }
@@ -19,6 +22,9 @@ namespace CareerManagamentSystem.DTOs
 
         // Hedef pozisyona göre hesaplanan uygunluk puanı
         public double SuitabilityScore { get; set; }
+
+        // Çalışanın hedef pozisyon için deneyim ve performans şartlarını sağlayıp sağlamadığını gösterir.
+        public bool HedefGeciseUygunMu { get; set; }
 
         // Çalışanın hedef pozisyona göre yetkinlik farkları
         public List<CompetencyGapDto> CompetencyGaps { get; set; }
