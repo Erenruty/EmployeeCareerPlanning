@@ -58,6 +58,11 @@ namespace CareerManagamentSystem.Services
                 var hedefPozisyon = db.Positions
                     .FirstOrDefault(x =>
                         x.PositionID == gecis.TargetPositionID);
+                // Hedef pozisyon veritabanında yoksa bu kariyer geçişi değerlendirilmez.
+                if (hedefPozisyon == null)
+                {
+                    continue;
+                }
 
                 // Kariyer geçişi için gerekli minimum deneyim alınır.
                 int minimumDeneyim = gecis.MinimumExperience ?? 0;
@@ -77,9 +82,7 @@ namespace CareerManagamentSystem.Services
 
                     TargetPositionID = gecis.TargetPositionID,
 
-                    TargetPositionName = hedefPozisyon != null
-                        ? hedefPozisyon.PositionName
-                        : "Bilinmeyen Pozisyon",
+                    TargetPositionName = hedefPozisyon.PositionName,
 
                     MinimumExperience = minimumDeneyim,
 

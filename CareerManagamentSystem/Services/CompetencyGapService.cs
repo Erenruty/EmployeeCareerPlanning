@@ -51,6 +51,12 @@ namespace CareerManagamentSystem.Services
                 // Pozisyonun istediği seviye ile çalışanın mevcut seviyesi arasındaki farkı hesaplıyoruz
                 int gap = requirement.RequiredLevel - currentLevel;
 
+                // Çalışanın seviyesi gerekenden yüksekse eksiklik 0 kabul edilir.
+                if (gap < 0)
+                {
+                    gap = 0;
+                }
+
                 // Hesaplanan bilgileri taşımak için yeni bir DTO oluşturuyoruz.
                 CompetencyGapDto result = new CompetencyGapDto();
 
@@ -58,7 +64,9 @@ namespace CareerManagamentSystem.Services
                 result.CompetencyID = requirement.CompetencyID;
 
                 // Yetkinliğin adını DTO'ya aktarıyoruz.
-                result.CompetencyName = competency.CompetencyName;
+                result.CompetencyName = competency != null
+                     ? competency.CompetencyName
+                     : "Bilinmeyen Yetkinlik";
 
                 // Çalışanın mevcut seviyesini aktarıyoruz.
                 result.CurrentLevel = currentLevel;
