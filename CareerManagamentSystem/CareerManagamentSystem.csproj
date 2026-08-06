@@ -124,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\AIRecommendController.cs" />
     <Compile Include="Controllers\CareerPathController.cs" />
     <Compile Include="Controllers\CompetenceyController.cs" />
     <Compile Include="Controllers\TrainingController.cs" />
@@ -803,6 +804,7 @@
     <Content Include="timeline\src\scss\free\_variables.scss" />
     <Content Include="timeline\src\scss\mdb.free.scss" />
     <Content Include="Views\Training\Index.cshtml" />
+    <Content Include="Views\AIRecommend\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

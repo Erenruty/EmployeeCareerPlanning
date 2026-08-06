@@ -25,6 +25,10 @@ namespace CareerManagamentSystem.Controllers
             var user1 = db.Users.FirstOrDefault(u => u.email == user.email && u.password == user.password);
             if (user1 != null)
             {
+                //logindeki bilgileri panele tasiyoruz
+                Session["userID"] = user1.UserID;   
+                Session["username"] = user1.username;
+                Session["email"] = user1.email;
                 FormsAuthentication.SetAuthCookie(user1.username, false);
                 return RedirectToAction("Index", "Home");
             }
@@ -40,16 +44,25 @@ namespace CareerManagamentSystem.Controllers
         }
         public ActionResult Logout()
         {
-
+            Session.Clear();
+            Session.Abandon();
             FormsAuthentication.SignOut();
             return RedirectToAction("Login", "Accounts");
         }
 
         [HttpGet]
-        public ActionResult profile() {
+        public ActionResult profile() // int userID
+        {
 
-
+            //var user = db.Users.FirstOrDefault(u => u.UserID == userID);
+            //var employee = db.Employees.Where(e => e.EmployeeID == user.EmployeeID).FirstOrDefault();
+            //// Birden fazla veri gonderme
+            //ViewBag.User = user;
+            //ViewBag.Employee = employee;
+            
             return View();
         }
+
+
     }
 }

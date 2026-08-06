@@ -6,14 +6,12 @@ using System.Web.Mvc;
 
 namespace CareerManagamentSystem.Controllers
 {
-    public class CareerPathController : Controller
+    public class AIRecommendController : Controller
     {
-        // GET: CareerPath
+        // GET: AIRecommend
         public ActionResult Index()
         {
             return View();
         }
-
-        public ActionResult deneme() { return View(); }
     }
 }

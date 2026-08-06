@@ -19,16 +19,30 @@
 </head>
 
 <body>
-    <div class="col-lg-12">
-        <section class="m-card">
-            <header class="m-card__header">
-                <div>
-                    <h2 class="m-card__title">Yetkinliklerim</h2>
-                    <p class="m-card__subtitle">Yetkinlik Dağılımı.</p>
-                </div>
-            </header>
-            <div style="height: 280px; position: relative;"><canvas id="polarChart"></canvas></div>
-        </section>
+    <div class="row">
+        <div class="col-lg-6">
+            <section class="m-card">
+                <header class="m-card__header">
+                    <div>
+                        <h2 class="m-card__title">Pasta Grafik</h2>
+                        <p class="m-card__subtitle">Mevcut teknik yetkinlikler. </p>
+                    </div>
+                </header>
+                <div style="height: 280px; position: relative;"><canvas id="polarChart"></canvas></div>
+            </section>
+        </div>
+
+        <div class="col-lg-6">
+            <section class="m-card">
+                <header class="m-card__header">
+                    <div>
+                        <h2 class="m-card__title">Radar Grafik</h2>
+                        <p class="m-card__subtitle">Mevcut kişisel yetkinlikler.</p>
+                    </div>
+                </header>
+                <div style="height: 280px; position: relative;"><canvas id="radarChart"></canvas></div>
+            </section>
+        </div>
     </div>
 
     <!-- Jquery JS-->
@@ -71,6 +85,26 @@
                     type: 'polarArea',
                     data: { labels: ['C#', 'SQL ', 'Python', 'JavaScript', 'Java'], datasets: [{ data: [30, 45, 25, 35, 40], backgroundColor: SOFT_PALETTE, borderColor: PALETTE, borderWidth: 1.5 }] },
                     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: true, position: 'bottom', labels: { usePointStyle: true, pointStyle: 'circle', padding: 12, font: { family: fontFam, size: 12 }, color: '#475569' } }, tooltip: tip }, scales: { r: { beginAtZero: true, grid: { color: '#eef0f3' }, angleLines: { color: '#eef0f3' }, ticks: { display: false } } } }
+                });
+            }
+
+            // 4. Radar
+            const radarCtx = document.getElementById('radarChart');
+            if (radarCtx) {
+                new Chart(radarCtx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['Performance', 'Scalability', 'Security', 'Usability', 'Reliability', 'Maintainability'],
+                        datasets: [
+                            
+                            { label: 'Mevcut', data: [90, 85, 95, 90, 95, 85], backgroundColor: 'rgba(17, 153, 142, 0.15)', borderColor: PALETTE[1], borderWidth: 2, pointBackgroundColor: PALETTE[1], pointBorderColor: '#fff', pointBorderWidth: 1.5 }
+                        ]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: { legend: legendStyle, tooltip: tip },
+                        scales: { r: { beginAtZero: true, max: 100, grid: { color: '#eef0f3' }, angleLines: { color: '#eef0f3' }, pointLabels: { font: { family: fontFam, size: 11 }, color: '#475569' }, ticks: { display: false } } }
+                    }
                 });
             }
         })();
