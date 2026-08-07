@@ -133,7 +133,7 @@ CREATE TABLE Users
     CreatedDate DATETIME NOT NULL DEFAULT GETDATE()
 );
 -- Users
-ALTER TABLE Departments
+ALTER TABLE Users
 ADD CONSTRAINT FK_Users_Employees
 FOREIGN KEY (EmployeeID)
 REFERENCES Employees(EmployeeID);
